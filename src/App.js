@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import { login as loginFn, logout, getToken } from "./services/auth.service";
 import { getUserInfo } from "./services/graph.service";
 
 export default () => {
-  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-
   const [userInfo, setUserInfo] = useState(null);
   const [apiCallFailed, setApiCallFailed] = useState(null);
   const [loginFailed, setLoginFailed] = useState(null);
@@ -52,15 +49,7 @@ export default () => {
   userInfo && templates.push(<pre key="userInfo">{JSON.stringify(userInfo, null, 4)}</pre>);
   loginFailed && templates.push(<strong key="loginFailed">Login unsuccessful</strong>);
   apiCallFailed && templates.push(<strong key="apiCallFailed">Graph API call unsuccessful</strong>);
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1 className="App-title">React app with MSAL.js</h1>
-      </header>
-      {templates}
-    </div>
-  );
+  return <div className="App">{templates}</div>;
 };
 
 const LoggedIn = ({ userName, callAPI }) => (
