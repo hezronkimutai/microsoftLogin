@@ -40,12 +40,11 @@ export default () => {
         setLoginFailed(true);
       }
     );
-    // getToken();
   };
-
   let templates = [];
-  user && templates.push(<LoggedIn callAPI={callAPI} userName={user.name} />);
-  !user && templates.push(<LoggedOut login={login} />);
+  localStorage.getItem("msal.idtoken") &&
+    templates.push(<LoggedIn key="loggedIn" callAPI={callAPI} userName={user && user.account.name} />);
+  !localStorage.getItem("msal.idtoken") && templates.push(<LoggedOut key="loggedout" login={login} />);
   userInfo && templates.push(<pre key="userInfo">{JSON.stringify(userInfo, null, 4)}</pre>);
   loginFailed && templates.push(<strong key="loginFailed">Login unsuccessful</strong>);
   apiCallFailed && templates.push(<strong key="apiCallFailed">Graph API call unsuccessful</strong>);
@@ -53,7 +52,7 @@ export default () => {
 };
 
 const LoggedIn = ({ userName, callAPI }) => (
-  <div key="loggedIn">
+  <div>
     <button onClick={callAPI} type="button">
       Call Graph's /me API
     </button>
@@ -65,7 +64,7 @@ const LoggedIn = ({ userName, callAPI }) => (
 );
 
 const LoggedOut = ({ login }) => (
-  <div key="loggedout">
+  <div>
     <button onClick={login} type="button">
       Login with Microsoft
     </button>

@@ -1,8 +1,6 @@
 import * as Msal from "msal";
 
 const localhosts = ["127.0.0.1", "localhost"];
-console.log("###########################", localhosts.includes(window.location.hostname));
-
 const msalConfig = {
   auth: {
     clientId: "261d3e9d-08d5-462f-9982-930d3de1eaae",
@@ -20,10 +18,9 @@ const app = new Msal.UserAgentApplication(msalConfig);
 
 export const login = () => {
   return app.loginPopup(msalConfig.scopes).then(
-    (idToken) => {
-      const user = app.getUser();
-      if (user) {
-        return user;
+    (response) => {
+      if (response) {
+        return response;
       } else {
         return null;
       }
